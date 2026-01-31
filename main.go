@@ -26,21 +26,22 @@ import (
 //"my-employee-api/storage"
 
 func main() {
-	// dbStore, err := storage.NewDBStore("mongodb://localhost:27017","TeamGoal","books")
-	// if err != nil {
-	// 	log.Fatalf("Not able to connect with mongodb: %v", err)
-	// }
-
-
-	filestore,err:=storage.NewFileStorage("data")
-		if err != nil {
-		log.Fatalf("could not create file storage: %v", err)
+	storage.Loadsecret()
+	dbStore, err := storage.NewDBStore("mongodb://localhost:27017","TeamGoal","books")
+	if err != nil {
+		log.Fatalf("Not able to connect with mongodb: %v", err)
 	}
+
+
+	// filestore,err:=storage.NewFileStorage("data")
+	// 	if err != nil {
+	// 	log.Fatalf("could not create file storage: %v", err)
+	// }
 
 	// memorystore:=storage.NewMemoryStorage()
 
 
 
-	server := NewServer(filestore)
+	server := NewServer(dbStore)
 	server.Start()
 }

@@ -80,3 +80,12 @@ func (s *dbStore) UpdateEmployee(id int, salary int) error {
     }
     return nil
 }
+func(s *dbStore) GetEmployeeByUsername(username string) (Employee,error){
+	filter:=bson.M{"username":username}
+	var emp Employee
+	err := s.collection.FindOne(context.TODO(), filter).Decode(&emp) 
+	if err!=nil{
+		return Employee{}, fmt.Errorf("user not found")
+	}
+	return emp,nil
+}
